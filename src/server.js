@@ -24,6 +24,7 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   res.status(err.status || 409);
+  //console.log(err);
   res.send(err.message);
 });
 

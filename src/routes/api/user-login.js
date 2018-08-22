@@ -6,15 +6,15 @@ const { User } = require('../../models');
 
 const router = new Router();
 
-router.post('/', (req, res, next) => {
-  console.log("POST");
+router.post('/:userId', (req, res, next) => {
   const { password, confirm_password } = req.body;
   if (!password || !confirm_password || password !== confirm_password) throw Boom.conflict('Passwords do not match');
   const user = new User(req.body);
+  user.id = req.params.userId;
   user
-    .save()
+    .update()
     .then(() => {
-      res.status(201).send({
+      res.status(200).send({
         success: true,
         token: getToken(user),
         user
